@@ -95,5 +95,24 @@ namespace IMP.Services
                 throw;
             }
         }
+        public async Task DeleteSectionAsync(string userId, string sectionId)
+        {
+            try
+            {
+                var url = $"{_databaseUrl}users/{userId}/sections/{sectionId}.json";
+                var response = await _httpClient.DeleteAsync(url);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new Exception($"Failed to delete section: {response.StatusCode}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error deleting section: {ex.Message}");
+                throw;
+            }
+        }
+
     }
 }

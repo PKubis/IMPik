@@ -2,6 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:IMP.ViewModels"
              x:Class="IMP.SectionsPage"
+             BackgroundImageSource="tlo1.jpg"
              Title="Sekcje">
     <ContentPage.BindingContext>
         <viewModels:SectionsViewModel />
@@ -9,40 +10,77 @@
 
     <ScrollView>
         <StackLayout Padding="20" Spacing="10">
-            <Label Text="Dodaj nową sekcję" FontSize="Large" HorizontalOptions="Center" />
+            <!-- Nagłówek -->
+            <Frame BackgroundColor="WhiteSmoke" Padding="20" CornerRadius="25" Opacity="0.8" HorizontalOptions="Center">
+                <Label Text="Dodaj nową sekcję" 
+                       FontSize="24" 
+                       FontAttributes="Bold" 
+                       HorizontalOptions="Center" 
+                       TextColor="Black" />
+            </Frame>
 
-            <!-- Pola dla sekcji -->
-            <Entry Placeholder="Nazwa sekcji" Text="{Binding SectionName}" />
-            <Entry Placeholder="Czas rozpoczęcia (HH:mm)" Text="{Binding StartTime}" Keyboard="Numeric" />
-            <Entry Placeholder="Czas trwania (minuty)" Text="{Binding Duration}" Keyboard="Numeric" />
+            <!-- Pola do dodawania sekcji -->
+            <Frame BackgroundColor="#B3FFFFFF" CornerRadius="15" Padding="10">
+                <Entry Placeholder="Nazwa sekcji" Text="{Binding SectionName}" />
+            </Frame>
+            <Frame BackgroundColor="#B3FFFFFF" CornerRadius="15" Padding="10">
+                <Entry Placeholder="Czas rozpoczęcia (HH:mm)" Text="{Binding StartTime}" Keyboard="Numeric" />
+            </Frame>
+            <Frame BackgroundColor="#B3FFFFFF" CornerRadius="15" Padding="10">
+                <Entry Placeholder="Czas trwania (minuty)" Text="{Binding Duration}" Keyboard="Numeric" />
+            </Frame>
 
             <!-- Wybór dni tygodnia -->
             <Label Text="Wybierz dni tygodnia:" FontSize="Medium" HorizontalOptions="Center" />
-            <Grid ColumnDefinitions="*,*,*,*,*,*,*">
-                <Button Text="Pn" Command="{Binding ToggleDayCommand}" CommandParameter="pn" BackgroundColor="{Binding DayColors[pn]}" Grid.Column="0" />
-                <Button Text="Wt" Command="{Binding ToggleDayCommand}" CommandParameter="wt" BackgroundColor="{Binding DayColors[wt]}" Grid.Column="1" />
-                <Button Text="Śr" Command="{Binding ToggleDayCommand}" CommandParameter="śr" BackgroundColor="{Binding DayColors[śr]}" Grid.Column="2" />
-                <Button Text="Cz" Command="{Binding ToggleDayCommand}" CommandParameter="cz" BackgroundColor="{Binding DayColors[cz]}" Grid.Column="3" />
-                <Button Text="Pt" Command="{Binding ToggleDayCommand}" CommandParameter="pt" BackgroundColor="{Binding DayColors[pt]}" Grid.Column="4" />
-                <Button Text="Sb" Command="{Binding ToggleDayCommand}" CommandParameter="sb" BackgroundColor="{Binding DayColors[sb]}" Grid.Column="5" />
-                <Button Text="Nd" Command="{Binding ToggleDayCommand}" CommandParameter="nd" BackgroundColor="{Binding DayColors[nd]}" Grid.Column="6" />
+            <Grid ColumnDefinitions="*,*,*,*,*,*,*" Padding="10">
+                <Button Text="Pn" Command="{Binding ToggleDayCommand}" CommandParameter="pn" BackgroundColor="{Binding DayColors[pn]}" />
+                <Button Text="Wt" Command="{Binding ToggleDayCommand}" CommandParameter="wt" BackgroundColor="{Binding DayColors[wt]}" />
+                <Button Text="Śr" Command="{Binding ToggleDayCommand}" CommandParameter="śr" BackgroundColor="{Binding DayColors[śr]}" />
+                <Button Text="Cz" Command="{Binding ToggleDayCommand}" CommandParameter="cz" BackgroundColor="{Binding DayColors[cz]}" />
+                <Button Text="Pt" Command="{Binding ToggleDayCommand}" CommandParameter="pt" BackgroundColor="{Binding DayColors[pt]}" />
+                <Button Text="Sb" Command="{Binding ToggleDayCommand}" CommandParameter="sb" BackgroundColor="{Binding DayColors[sb]}" />
+                <Button Text="Nd" Command="{Binding ToggleDayCommand}" CommandParameter="nd" BackgroundColor="{Binding DayColors[nd]}" />
             </Grid>
 
+
+
             <!-- Przycisk dodawania sekcji -->
-            <Button Text="Dodaj sekcję" Command="{Binding AddSectionCommand}" />
+            <Button Text="Dodaj sekcję" Command="{Binding AddSectionCommand}" BackgroundColor="#4CAF50" TextColor="White" />
 
-            <!-- Sekcje istniejące -->
-            <Label Text="Istniejące sekcje" FontSize="Large" HorizontalOptions="Center" />
-
+            <!-- Lista sekcji -->
+            <Label Text="Twoje sekcje" FontSize="24" HorizontalOptions="Center" />
             <CollectionView ItemsSource="{Binding Sections}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Frame Padding="10" Margin="5" BackgroundColor="#EFEFEF" CornerRadius="10">
-                            <StackLayout>
-                                <Label Text="{Binding Name}" FontAttributes="Bold" />
-                                <Label Text="{Binding StartTime, StringFormat='Czas rozpoczęcia: {0}'}" />
-                                <Label Text="{Binding Duration, StringFormat='Czas trwania: {0} min'}" />
-                                <Label Text="{Binding SelectedDays, StringFormat='Dni aktywności: {0}'}" />
+                        <Frame BackgroundColor="#B3FFFFFF" Padding="10" CornerRadius="15">
+                            <StackLayout Orientation="Horizontal" Spacing="10">
+                                <!-- Informacje o sekcji -->
+                                <StackLayout Spacing="5" VerticalOptions="CenterAndExpand">
+                                    <Label Text="{Binding Name}" FontAttributes="Bold" />
+                                    <Label Text="{Binding StartTime, StringFormat='Czas rozpoczęcia: {0}'}" />
+                                    <Label Text="{Binding Duration, StringFormat='Czas trwania: {0} min'}" />
+                                    <Label Text="{Binding SelectedDays, StringFormat='Dni: {0}'}" />
+                                </StackLayout>
+                                <!-- Guziki Edytuj i Usuń -->
+                                <StackLayout Orientation="Horizontal" Spacing="5" VerticalOptions="Center">
+                                    <Button Text="Edytuj" 
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:SectionsViewModel}}, Path=EditSectionCommand}" 
+                                            CommandParameter="{Binding Id}" 
+                                            BackgroundColor="Blue" 
+                                            TextColor="White" 
+                                            FontSize="12" 
+                                            WidthRequest="60" 
+                                            HeightRequest="40" />
+
+                                    <Button Text="Usuń" 
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewModels:SectionsViewModel}}, Path=DeleteSectionCommand}" 
+                                            CommandParameter="{Binding Id}" 
+                                            BackgroundColor="Red" 
+                                            TextColor="White" 
+                                            FontSize="12" 
+                                            WidthRequest="60" 
+                                            HeightRequest="40" />
+                                </StackLayout>
                             </StackLayout>
                         </Frame>
                     </DataTemplate>
