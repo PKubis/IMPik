@@ -32,16 +32,15 @@
 
             <!-- Wybór dni tygodnia -->
             <Label Text="Wybierz dni tygodnia:" FontSize="Medium" HorizontalOptions="Center" />
-            <Grid ColumnDefinitions="*,*,*,*,*,*,*" Padding="10">
-                <Button Text="Pn" Command="{Binding ToggleDayCommand}" CommandParameter="pn" BackgroundColor="{Binding DayColors[pn]}" />
-                <Button Text="Wt" Command="{Binding ToggleDayCommand}" CommandParameter="wt" BackgroundColor="{Binding DayColors[wt]}" />
-                <Button Text="Śr" Command="{Binding ToggleDayCommand}" CommandParameter="śr" BackgroundColor="{Binding DayColors[śr]}" />
-                <Button Text="Cz" Command="{Binding ToggleDayCommand}" CommandParameter="cz" BackgroundColor="{Binding DayColors[cz]}" />
-                <Button Text="Pt" Command="{Binding ToggleDayCommand}" CommandParameter="pt" BackgroundColor="{Binding DayColors[pt]}" />
-                <Button Text="Sb" Command="{Binding ToggleDayCommand}" CommandParameter="sb" BackgroundColor="{Binding DayColors[sb]}" />
-                <Button Text="Nd" Command="{Binding ToggleDayCommand}" CommandParameter="nd" BackgroundColor="{Binding DayColors[nd]}" />
+            <Grid ColumnDefinitions="*,*,*,*,*,*,*">
+                <Button Text="Pn" Command="{Binding ToggleDayCommand}" CommandParameter="pn" BackgroundColor="{Binding DayColors[pn]}" Grid.Column="0" />
+                <Button Text="Wt" Command="{Binding ToggleDayCommand}" CommandParameter="wt" BackgroundColor="{Binding DayColors[wt]}" Grid.Column="1" />
+                <Button Text="Śr" Command="{Binding ToggleDayCommand}" CommandParameter="śr" BackgroundColor="{Binding DayColors[śr]}" Grid.Column="2" />
+                <Button Text="Cz" Command="{Binding ToggleDayCommand}" CommandParameter="cz" BackgroundColor="{Binding DayColors[cz]}" Grid.Column="3" />
+                <Button Text="Pt" Command="{Binding ToggleDayCommand}" CommandParameter="pt" BackgroundColor="{Binding DayColors[pt]}" Grid.Column="4" />
+                <Button Text="Sb" Command="{Binding ToggleDayCommand}" CommandParameter="sb" BackgroundColor="{Binding DayColors[sb]}" Grid.Column="5" />
+                <Button Text="Nd" Command="{Binding ToggleDayCommand}" CommandParameter="nd" BackgroundColor="{Binding DayColors[nd]}" Grid.Column="6" />
             </Grid>
-
 
 
             <!-- Przycisk dodawania sekcji -->
@@ -68,8 +67,7 @@
                                             CommandParameter="{Binding Id}" 
                                             BackgroundColor="Blue" 
                                             TextColor="White" 
-                                            FontSize="12" 
-                                            WidthRequest="60" 
+                                            WidthRequest="80" 
                                             HeightRequest="40" />
 
                                     <Button Text="Usuń" 
@@ -77,8 +75,7 @@
                                             CommandParameter="{Binding Id}" 
                                             BackgroundColor="Red" 
                                             TextColor="White" 
-                                            FontSize="12" 
-                                            WidthRequest="60" 
+                                            WidthRequest="80" 
                                             HeightRequest="40" />
                                 </StackLayout>
                             </StackLayout>

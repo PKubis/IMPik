@@ -10,4 +10,6 @@ namespace IMP
             BindingContext = new SectionsViewModel(userId);
         }
     }
+
 }
+

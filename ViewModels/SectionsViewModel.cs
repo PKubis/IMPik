@@ -26,7 +26,6 @@ namespace IMP.ViewModels
             EditSectionCommand = new Command<string>(async id => await EditSection(id));
         }
 
-        // Konstruktor z parametrem `userId` dla inicjalizacji z danymi użytkownika
         public SectionsViewModel(string userId) : this()
         {
             _userId = userId;
@@ -74,17 +73,18 @@ namespace IMP.ViewModels
         private void InitializeDayColors()
         {
             DayColors = new Dictionary<string, string>
-            {
-                { "pn", "LightGray" },
-                { "wt", "LightGray" },
-                { "śr", "LightGray" },
-                { "cz", "LightGray" },
-                { "pt", "LightGray" },
-                { "sb", "LightGray" },
-                { "nd", "LightGray" }
-            };
-            OnPropertyChanged(nameof(DayColors)); // Upewnij się, że widok jest aktualizowany
+    {
+        { "pn", "LightGray" },
+        { "wt", "LightGray" },
+        { "śr", "LightGray" },
+        { "cz", "LightGray" },
+        { "pt", "LightGray" },
+        { "sb", "LightGray" },
+        { "nd", "LightGray" }
+    };
+            OnPropertyChanged(nameof(DayColors));
         }
+
 
         private void ToggleDay(string day)
         {
@@ -100,6 +100,7 @@ namespace IMP.ViewModels
             }
             OnPropertyChanged(nameof(DayColors));
         }
+
 
         private async Task LoadSectionsAsync()
         {
@@ -164,14 +165,9 @@ namespace IMP.ViewModels
             string newDuration = await Application.Current.MainPage.DisplayPromptAsync("Edytuj czas trwania", "Podaj nowy czas trwania (minuty):", initialValue: section.Duration.ToString());
             if (string.IsNullOrWhiteSpace(newDuration)) return;
 
-            string newDays = await Application.Current.MainPage.DisplayPromptAsync(
-                "Edytuj dni aktywności",
-                "Podaj nowe dni tygodnia, oddzielając je przecinkami.\nLegenda: pn, wt, śr, cz, pt, sb, nd",
-                initialValue: section.SelectedDays
-            );
+            var newDays = await Application.Current.MainPage.DisplayPromptAsync("Edytuj dni", "Podaj nowe dni tygodnia oddzielone przecinkami (np. pn, wt, śr):", initialValue: section.SelectedDays);
             if (string.IsNullOrWhiteSpace(newDays)) return;
 
-            // Aktualizacja sekcji
             section.Name = newName;
             section.StartTime = newStartTime;
             section.Duration = int.Parse(newDuration);
@@ -180,10 +176,5 @@ namespace IMP.ViewModels
             await _firebaseService.SaveSectionAsync(_userId, section);
             Sections[Sections.IndexOf(section)] = section;
         }
-
-
-
-
-
     }
 }
